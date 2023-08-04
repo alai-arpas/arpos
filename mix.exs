@@ -8,9 +8,15 @@ defmodule Arpos.MixProject do
       app: :arpos,
       version: @version,
       elixir: "~> 1.15",
+      description: description(),
+      package: package(),
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
+  end
+
+  defp description do
+    "Read data from postgres - Internal Project"
   end
 
   # Run "mix help compile.app" to learn about applications.
@@ -29,9 +35,17 @@ defmodule Arpos.MixProject do
     ]
   end
 
+  defp package() do
+    [
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/alai-arpas/arpos"}
+    ]
+  end
+
   defp aliases do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"]
+      wv: ["arpos -b"]
       # alai: ["run priv/repo/alai_seeds.exs"]
       # "ecto.reset": ["ecto.drop", "ecto.setup"]
     ]
