@@ -11,7 +11,8 @@ defmodule Arpos.MixProject do
       description: description(),
       package: package(),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
