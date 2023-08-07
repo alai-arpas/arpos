@@ -14,4 +14,4 @@ def deps do
 end
 ```
 
-Documentation can be found at <https://hexdocs.pm/arpos>.
+Documentazione: <https://hexdocs.pm/arpos>.
