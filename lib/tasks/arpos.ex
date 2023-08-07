@@ -48,11 +48,12 @@ defmodule Mix.Tasks.Arpos do
     Mix.shell().info("\n## Options\n")
     Mix.shell().info("-v, --version        # Prints     Arpos version\n")
     Mix.shell().info("-awv DO NOT USE      # Allinea    Arpos version\n")
-    Mix.Tasks.Help.run(["--search", "phx."])
+    Mix.Tasks.Help.run(["--search", "arpos."])
   end
 
   defp modifica_readme(da_version) do
     v_elimnata = String.slice(da_version, 1, 50)
+    IO.inspect(v_elimnata, label: "v_eliminata")
     con_readme = File.read!("README.md")
     new_version = String.replace(con_readme, v_elimnata, @version)
     File.write!("README.md", new_version)
