@@ -1,6 +1,6 @@
 # Arpos
 
-# Internal Project, deals with a specific case, not applicable in general.
+## Internal Project, deals with a specific case, not applicable in general.
 
 **TODO: Add description**
 
