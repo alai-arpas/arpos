@@ -1,7 +1,7 @@
 defmodule Arpos.MixProject do
   use Mix.Project
 
-  @version "0.1.2"
+  @version "0.1.3"
 
   def project do
     [
@@ -33,6 +33,7 @@ defmodule Arpos.MixProject do
     [
       {:ecto_sql, "~> 3.10.1"},
       {:postgrex, ">= 0.0.0"},
+      {:jamdb_oracle, "~> 0.5.5"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end

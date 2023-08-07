@@ -1,7 +1,5 @@
 import Config
 
-config :arpos, :ecto_repos, [Arpos.Repo]
-
 config :arpos, Arpos.Repo,
   username: System.get_env("ARPAGEO_DB_USER"),
   password: System.get_env("ARPAGEO_DB_PASSWORD"),

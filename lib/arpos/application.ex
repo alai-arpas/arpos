@@ -8,6 +8,7 @@ defmodule Arpos.Application do
   def start(_type, _args) do
     children = [
       Arpos.Repo
+      # Arpos.RepoOra - per ora non funziona - rivedere erlang odbc
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
