@@ -1,4 +1,4 @@
-defmodule Arpos.McIdro.BuildTas do
+defmodule Arpos.Db.McIdro.BuildTas do
   alias Arpos.Repo
 
   import Ecto.Query

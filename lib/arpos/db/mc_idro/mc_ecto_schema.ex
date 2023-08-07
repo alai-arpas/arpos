@@ -1,4 +1,4 @@
-defmodule Arpos.McIdro.McEctoSchema do
+defmodule Arpos.Db.McIdro.McEctoSchema do
   defmacro __using__(_) do
     quote do
       use Ecto.Schema

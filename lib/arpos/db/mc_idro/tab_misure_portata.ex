@@ -1,7 +1,7 @@
-defmodule Arpos.McIdro.TabMisurePortata do
-  use Arpos.McIdro.McEctoSchema
+defmodule Arpos.Db.McIdro.TabMisurePortata do
+  use Arpos.Db.McIdro.McEctoSchema
 
-  alias Arpos.McIdro.TabAnagraficaStazioni
+  alias Arpos.Db.McIdro.TabAnagraficaStazioni
 
   @primary_key {:misure_id, :string, autogenerate: false}
 
