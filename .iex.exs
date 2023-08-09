@@ -19,3 +19,5 @@ q1 = from m in TabMisurePortata, where: m.sito_id == "IDR0001"
 
 
 qsql = "select s.cod_staz, s.nome, s.tipo_staz, s.stato from STAZIONI s order by s.tipo_staz, s.cod_staz"
+
+alias Arpos.Toolbox.CaeXga

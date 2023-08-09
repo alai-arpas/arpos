@@ -1,7 +1,7 @@
 defmodule Arpos.MixProject do
   use Mix.Project
 
-  @version "0.1.3"
+  @version "0.1.4"
 
   def project do
     [
@@ -17,7 +17,7 @@ defmodule Arpos.MixProject do
   end
 
   defp description do
-    "Read data from postgres - Internal Project"
+    "Internal Project, don't waste your time here."
   end
 
   # Run "mix help compile.app" to learn about applications.
