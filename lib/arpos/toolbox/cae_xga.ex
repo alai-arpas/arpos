@@ -38,8 +38,9 @@ defmodule Arpos.Toolbox.CaeXga do
   decodifica("TIPO - (codice) nome")
 
   ## Examples
-    iex> Arpos.Toolbox.CaeXga.decodifica("I - (32437) Nome Stazione")
-    %{codice: "32437", nome: "Nome Stazione", tipo: "I"}
+
+      iex> Arpos.Toolbox.CaeXga.decodifica("I - (32437) Nome Stazione")
+      %{codice: "32437", nome: "Nome Stazione", tipo: "I"}
 
   """
   def decodifica(stringa_nome_colonna) do

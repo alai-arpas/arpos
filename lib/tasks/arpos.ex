@@ -6,8 +6,8 @@ defmodule Mix.Tasks.Arpos do
   @moduledoc """
   Prints Arpos tasks and their information.
       $ mix Arpos
-  To print the Arpos version, pass `-v` or `--version`, for example:
-      $ mix Arpos --version
+  To print the arpos version, pass `-v` or `--version`, for example:
+      $ mix arpos --version
   """
 
   @version Mix.Project.config()[:version]
@@ -19,7 +19,11 @@ defmodule Mix.Tasks.Arpos do
   end
 
   @impl true
-  @doc false
+  @doc """
+  Legge la versione da mix.exs e la cambia in:
+  README.md
+  VERSION
+  """
   def run([opzione]) when opzione in ~w(-awv --allinea) do
     old = File.read!("VERSION")
     new_version = "v#{@version}"
@@ -46,8 +50,8 @@ defmodule Mix.Tasks.Arpos do
     Mix.shell().info("Gestione versione")
     Mix.shell().info("Arpos v#{Application.spec(:Arpos, :vsn)}")
     Mix.shell().info("\n## Options\n")
-    Mix.shell().info("-v, --version        # Prints     Arpos version\n")
-    Mix.shell().info("-awv DO NOT USE      # Allinea    Arpos version\n")
+    Mix.shell().info("-v, --version # Arpos version\n")
+    Mix.shell().info("-awv          # Allinea la versione in più file\n")
     Mix.Tasks.Help.run(["--search", "arpos."])
   end
 
