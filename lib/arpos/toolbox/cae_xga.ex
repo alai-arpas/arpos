@@ -3,22 +3,30 @@ defmodule Arpos.Toolbox.CaeXga do
   Modulo specifico per trattare i dati esportati da cae_xga in formato csv.
   """
 
-  @in_windows Application.compile_env(:epoa, :windows_share, "./test")
+  alias Explorer, as: Exp
+
+  @in_windows Application.compile_env(:arpos, :windows_share, "./test")
 
   @doc """
   Directory condivisa in windows raggiungibile da server linux
   """
   def csv_dir do
-    "#{@in_windows}/csv_da_xga"
+    "#{@in_windows}/poa/csv_da_xga"
   end
 
   @doc """
-  Tutti i file da elaborare
+  La lista dei file esportati da CAE tramite il software XGA
   """
   def csv_files do
     Path.wildcard("#{csv_dir()}/*.csv")
   end
 
+  @doc """
+  Ricava anno e il mese da nome del file
+  ## Examples
+      iex> Arpos.Toolbox.CaeXga.file_anno_mese("/windows_share/poa/csv_da_xga/200501.csv")
+      {"/windows_share/poa/csv_da_xga/200501.csv", "2005", "01"}
+  """
   def file_anno_mese(file) do
     anno_mese =
       with base <- Path.basename(file),
@@ -30,26 +38,29 @@ defmodule Arpos.Toolbox.CaeXga do
     {file, anno, mese}
   end
 
-  def es_stringa_nome_colonna, do: "P - (12345) Cagliari Stazione"
-
   @doc """
-  Estrai i singoli valori da una stringa_nome_colonna
-
-  decodifica("TIPO - (codice) nome")
-
+  Estrai i singoli valori da una "nome_colonna"
   ## Examples
 
       iex> Arpos.Toolbox.CaeXga.decodifica("I - (32437) Nome Stazione")
       %{codice: "32437", nome: "Nome Stazione", tipo: "I"}
-
   """
-  def decodifica(stringa_nome_colonna) do
-    [tipo, numero_nome] = String.split(stringa_nome_colonna, "-")
+  def decodifica(nome_colonna) do
+    [tipo, numero_nome] = String.split(nome_colonna, "-")
 
     [codice, nome] = String.split(numero_nome, ")")
 
     codice = String.replace(codice, "(", "")
 
     %{tipo: String.trim(tipo), codice: String.trim(codice), nome: String.trim(nome)}
+  end
+
+  def colonne_da_csv(file) do
+    opts = [delimiter: ";", max_rows: 0, dtypes: [{"Data", :date}, {"Ora", :string}]]
+
+    Exp.DataFrame.from_csv!(file, opts)
+    |> Exp.DataFrame.names()
+    # Remove le prime 2 colonne -> Data, Ora
+    |> Enum.drop(2)
   end
 end

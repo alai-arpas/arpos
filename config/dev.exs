@@ -1,5 +1,7 @@
 import Config
 
+config :arpos, :windows_share, System.get_env("WINDOWS_SHARE")
+
 config :logger, :console,
   format: "[$level] $message $metadata\n",
   metadata: [:error_code, :file, :line],

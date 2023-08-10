@@ -1,7 +1,7 @@
 defmodule Arpos.MixProject do
   use Mix.Project
 
-  @version "0.1.5"
+  @version "0.1.6"
 
   def project do
     [
@@ -34,6 +34,7 @@ defmodule Arpos.MixProject do
       {:ecto_sql, "~> 3.10.1"},
       {:postgrex, ">= 0.0.0"},
       {:jamdb_oracle, "~> 0.5.5"},
+      {:explorer, "~> 0.6.0"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
@@ -48,7 +49,7 @@ defmodule Arpos.MixProject do
   defp aliases do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      wv: ["arpos -b"]
+      wv: ["arpos -awv"]
       # alai: ["run priv/repo/alai_seeds.exs"]
       # "ecto.reset": ["ecto.drop", "ecto.setup"]
     ]
