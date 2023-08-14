@@ -3,8 +3,6 @@ defmodule Arpos.Toolbox.CaeXga do
   Modulo specifico per trattare i dati esportati da cae_xga in formato csv.
   """
 
-  defstruct [:file, :anno, :mese]
-
   alias Explorer, as: Exp
   alias Arpos.Toolbox.CaeXga
 
@@ -38,7 +36,7 @@ defmodule Arpos.Toolbox.CaeXga do
 
     anno = String.slice(anno_mese, 0, 4)
     mese = String.slice(anno_mese, 4, 2)
-    %CaeXga{file: file, anno: anno, mese: mese}
+    %{"file" => file, "anno" => anno, "mese" => mese}
   end
 
   @doc """
