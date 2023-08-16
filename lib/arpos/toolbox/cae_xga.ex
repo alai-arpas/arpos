@@ -4,8 +4,6 @@ defmodule Arpos.Toolbox.CaeXga do
   """
 
   alias Explorer, as: Exp
-  alias Arpos.Toolbox.CaeXga
-
   @in_windows Application.compile_env(:arpos, :windows_share, "./test")
 
   @doc """
@@ -47,26 +45,43 @@ defmodule Arpos.Toolbox.CaeXga do
       %{codice: "32437", nome: "Nome Stazione", tipo: "I"}
   """
   def decodifica(nome_colonna) do
-    [tipo, numero_nome] = String.split(nome_colonna, "-")
+    [tipo, numero_nome] = String.split(nome_colonna, "-", parts: 2)
 
     [codice, nome] = String.split(numero_nome, ")")
 
     codice = String.replace(codice, "(", "")
 
-    %{tipo: String.trim(tipo), codice: String.trim(codice), nome: String.trim(nome)}
+    %{tipo: String.trim(tipo), sensore: String.trim(codice), nome: String.trim(nome)}
   end
 
   def colonne_da_csv(file) do
     opts = [delimiter: ";", max_rows: 0, dtypes: [{"Data", :date}, {"Ora", :string}]]
 
-    Exp.DataFrame.from_csv!(file, opts)
-    |> Exp.DataFrame.names()
-    # Remove le prime 2 colonne -> Data, Ora
-    |> Enum.drop(2)
+    colonne =
+      Exp.DataFrame.from_csv!(file, opts)
+      |> Exp.DataFrame.names()
+      # Remove le prime 2 colonne -> Data, Ora
+      |> Enum.drop(2)
+
+    colonne
   end
 
   def struttura_files do
     csv_files()
     |> Enum.map(&file_anno_mese/1)
+  end
+
+  def record_per_tutti_i_file do
+    csv_files()
+    |> Enum.map(&record_per_file/1)
+    |> List.flatten()
+  end
+
+  def record_per_file(file) do
+    IO.inspect(file, label: "file")
+    %{"file" => file, "anno" => anno, "mese" => mese} = file_anno_mese(file)
+    colonne = colonne_da_csv(file)
+    anno_mese = %{"anno" => anno, "mese" => mese}
+    Enum.map(colonne, fn c -> Map.merge(anno_mese, decodifica(c)) end)
   end
 end
