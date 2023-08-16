@@ -73,6 +73,7 @@ defmodule Arpos.Toolbox.CaeXga do
 
   def record_per_tutti_i_file do
     csv_files()
+    # |> Enum.take(2)
     |> Enum.map(&record_per_file/1)
     |> List.flatten()
   end
@@ -81,7 +82,7 @@ defmodule Arpos.Toolbox.CaeXga do
     IO.inspect(file, label: "file")
     %{"file" => file, "anno" => anno, "mese" => mese} = file_anno_mese(file)
     colonne = colonne_da_csv(file)
-    anno_mese = %{"anno" => anno, "mese" => mese}
-    Enum.map(colonne, fn c -> Map.merge(anno_mese, decodifica(c)) end)
+    anno_mese = %{anno: anno, mese: mese}
+    Enum.map(colonne, fn colonna -> Map.merge(anno_mese, decodifica(colonna)) end)
   end
 end

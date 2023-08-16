@@ -1,7 +1,6 @@
 import Config
 
 config :arpos, :windows_share, System.get_env("WINDOWS_SHARE")
-config :arpos, :oracle_rest_url, System.get_env("ORACLE_REST_URL")
 
 config :logger, :console,
   format: "[$level] $message $metadata\n",
