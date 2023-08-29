@@ -117,6 +117,11 @@ defmodule Arpos.Toolbox.CaeXga do
     colonne
   end
 
+  def struttura_files_punto do
+    csv_files_punto()
+    |> Enum.map(&file_anno_mese/1)
+  end
+
   def struttura_files do
     csv_files()
     |> Enum.map(&file_anno_mese/1)

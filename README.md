@@ -14,7 +14,7 @@
 ```elixir
 def deps do
   [
-    {:arpos, "~> 0.1.11"}
+    {:arpos, "~> 0.1.12"}
   ]
 end
 ```
