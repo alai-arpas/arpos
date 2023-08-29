@@ -13,11 +13,62 @@ defmodule Arpos.Toolbox.CaeXga do
     "#{@in_windows}/poa/csv_da_xga"
   end
 
+  def csv_dir_punto, do: "#{@in_windows}/poa/csv_da_xga_PUNTO"
+
+  @doc """
+  Copia tutti i file da "csv_xga" a "csv_xga_PUNTO"
+  sostituendo la "," col "." in maniera asincrona
+  """
+  def copia_tutto(files, pid, sovrascrivi \\ false) do
+    files
+    |> Enum.each(fn file -> spawn(fn -> sostituisci_virgola_punto(file, pid, sovrascrivi) end) end)
+  end
+
+  defp file_in_out(file) do
+    nome_no_path_no_csv = Path.basename(file, ".csv")
+    file_out = Path.join(csv_dir_punto(), "#{nome_no_path_no_csv}_punto.csv")
+
+    {file, file_out}
+  end
+
+  @doc """
+  Sostituisce la virgola "," con il "." punto
+  """
+  def sostituisci_virgola_punto(file, pid, sovrascrivi \\ false) do
+    {file_in, file_out} = file_in_out(file)
+
+    if File.exists?(file_out) do
+      if sovrascrivi do
+        elabora_e_scrivi(:sovrascritto, file_in, file_out, pid)
+      else
+        send(pid, {:esiste, file_out})
+      end
+    else
+      # non esiste, puoi scrivere
+      elabora_e_scrivi(:scritto, file_in, file_out, pid)
+    end
+  end
+
+  defp elabora_e_scrivi(msg, file_in, file_out, pid) do
+    contenuto_virgola = File.read!(file_in)
+    contenuto_punto = String.replace(contenuto_virgola, ",", ".")
+    res = File.write!(file_out, contenuto_punto)
+    send(pid, {msg, file_out, res})
+  end
+
   @doc """
   La lista dei file esportati da CAE tramite il software XGA
   """
   def csv_files do
     Path.wildcard("#{csv_dir()}/*.csv")
+  end
+
+  @doc """
+  La lista dei file esportati da CAE tramite il software XGA
+  Elixir explorer ha problemi con la "," virgola
+  """
+  def csv_files_punto do
+    Path.wildcard("#{csv_dir_punto()}/*.csv")
   end
 
   @doc """
